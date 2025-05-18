@@ -1,4 +1,4 @@
-type ErrorType = 'load' | 'add' | 'delete' | 'update' | '';
+import { ErrorType } from '../../types/ErrorType';
 
 type Props = {
   error: ErrorType;

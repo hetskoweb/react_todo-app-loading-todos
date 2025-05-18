@@ -6,14 +6,13 @@ import { UserWarning } from './UserWarning';
 import { USER_ID } from './api/todos';
 import { getTodos } from './api/todos';
 import { Todo } from './types/Todo';
+import { ErrorType } from './types/ErrorType';
 import { FilterStatus } from './types/FilterStatus';
 import { TodoHeader } from './components/TodoHeader/TodoHeader';
 import { TodoList } from './components/TodoList/TodoList';
 import { TodoFooter } from './components/TodoFooter/TodoFooter';
 // eslint-disable-next-line max-len
 import { ErrorNotification } from './components/ErrorNotification/ErrorNotification';
-
-type ErrorType = 'load' | 'add' | 'delete' | 'update' | '';
 
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -31,6 +30,18 @@ export const App: React.FC = () => {
       .catch(() => setError('load'))
       .finally(() => setIsLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      const timeoutId = setTimeout(() => {
+        setError('');
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
+    }
+
+    return undefined;
+  }, [error]);
 
   if (!USER_ID) {
     return <UserWarning />;
