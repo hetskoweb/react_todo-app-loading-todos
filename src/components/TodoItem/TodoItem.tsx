@@ -31,8 +31,10 @@ export const TodoItem: React.FC<Props> = ({ todo, isEditing, isLoading }) => {
         </form>
       ) : (
         <>
-          <span className="todo__title">{todo.title}</span>
-          <button data-cy="DeleteButton" type="button" className="todo__remove">
+          <span data-cy="TodoTitle" className="todo__title">
+            {todo.title}
+          </span>
+          <button data-cy="TodoDelete" type="button" className="todo__remove">
             ×
           </button>
         </>
