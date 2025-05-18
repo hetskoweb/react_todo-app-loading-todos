@@ -31,18 +31,6 @@ export const App: React.FC = () => {
       .finally(() => setIsLoading(false));
   }, []);
 
-  useEffect(() => {
-    if (error) {
-      const timeoutId = setTimeout(() => {
-        setError('');
-      }, 3000);
-
-      return () => clearTimeout(timeoutId);
-    }
-
-    return undefined;
-  }, [error]);
-
   if (!USER_ID) {
     return <UserWarning />;
   }
@@ -81,7 +69,11 @@ export const App: React.FC = () => {
           onClearCompleted={handleClearCompleted}
         />
       </div>
-      <ErrorNotification error={error} onClose={() => setError('')} />
+      <ErrorNotification
+        error={error}
+        setError={setError}
+        onClose={() => setError('')}
+      />
     </div>
   );
 };

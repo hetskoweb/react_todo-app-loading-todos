@@ -32,7 +32,7 @@ export const TodoItem: React.FC<Props> = ({ todo, isEditing, isLoading }) => {
       ) : (
         <>
           <span className="todo__title">{todo.title}</span>
-          <button type="button" className="todo__remove">
+          <button data-cy="DeleteButton" type="button" className="todo__remove">
             ×
           </button>
         </>

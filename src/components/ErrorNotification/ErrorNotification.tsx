@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { ErrorType } from '../../types/ErrorType';
 
 type Props = {
   error: ErrorType;
+  setError: (error: ErrorType) => void;
   onClose: () => void;
 };
 
@@ -13,15 +15,27 @@ const errorMessages: Record<ErrorType, string> = {
   '': '', // пусто, если нет ошибки
 };
 
-export const ErrorNotification: React.FC<Props> = ({ error, onClose }) => {
-  if (!error) {
-    return null;
-  }
+export const ErrorNotification: React.FC<Props> = ({
+  error,
+  setError,
+  onClose,
+}) => {
+  useEffect(() => {
+    if (error) {
+      const timeoutId = setTimeout(() => {
+        setError('');
+      }, 3000);
+
+      return () => clearTimeout(timeoutId);
+    }
+
+    return undefined;
+  }, [error, setError]);
 
   return (
     <div
       data-cy="ErrorNotification"
-      className="notification is-danger is-light has-text-weight-normal"
+      className={`notification is-danger is-light has-text-weight-normal ${error ? '' : 'hidden'}`}
     >
       <button
         data-cy="HideErrorButton"
