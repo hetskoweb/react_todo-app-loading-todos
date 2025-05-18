@@ -17,6 +17,10 @@ export const TodoFooter: React.FC<Props> = ({
   const activeCount = todos.filter(todo => !todo.completed).length;
   const completedCount = todos.filter(todo => todo.completed).length;
 
+  if (todos.length === 0) {
+    return null;
+  }
+
   return (
     <footer className="todoapp__footer" data-cy="Footer">
       <span className="todo-count" data-cy="TodosCounter">

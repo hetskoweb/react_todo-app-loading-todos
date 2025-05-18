@@ -61,7 +61,7 @@ export const App: React.FC = () => {
       <h1 className="todoapp__title">todos</h1>
 
       <div className="todoapp__content">
-        <TodoHeader />
+        <TodoHeader todos={todos} />
         <TodoList todos={filteredTodos} isLoading={isLoading} />
         <TodoFooter
           todos={todos}
