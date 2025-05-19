@@ -16,6 +16,7 @@ export const TodoFooter: React.FC<Props> = ({
 }) => {
   const activeCount = todos.filter(todo => !todo.completed).length;
   const completedCount = todos.filter(todo => todo.completed).length;
+  const itemsLeftText = `${activeCount} item${activeCount !== 1 ? 's' : ''} left`;
 
   if (!todos.length) {
     return null;
@@ -24,37 +25,22 @@ export const TodoFooter: React.FC<Props> = ({
   return (
     <footer className="todoapp__footer" data-cy="Footer">
       <span className="todo-count" data-cy="TodosCounter">
-        {activeCount} item{activeCount !== 1 ? 's' : ''} left
+        {itemsLeftText}
       </span>
 
       {/* Active link should have the 'selected' class */}
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={`filter__link ${currentFilter === FilterStatus.All ? 'selected' : ''}`}
-          data-cy="FilterLinkAll"
-          onClick={() => onFilterChange(FilterStatus.All)}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={`filter__link ${currentFilter === FilterStatus.Active ? 'selected' : ''}`}
-          data-cy="FilterLinkActive"
-          onClick={() => onFilterChange(FilterStatus.Active)}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={`filter__link ${currentFilter === FilterStatus.Completed ? 'selected' : ''}`}
-          data-cy="FilterLinkCompleted"
-          onClick={() => onFilterChange(FilterStatus.Completed)}
-        >
-          Completed
-        </a>
+        {Object.values(FilterStatus).map(filter => (
+          <a
+            key={filter}
+            href={`#/${filter.toLowerCase()}`}
+            className={`filter__link ${currentFilter === filter ? 'selected' : ''}`}
+            data-cy={`FilterLink${filter}`}
+            onClick={() => onFilterChange(filter)}
+          >
+            {filter}
+          </a>
+        ))}
       </nav>
 
       {/* this button should be disabled if there are no completed todos */}

@@ -8,15 +8,19 @@ type Props = {
   isLoading?: boolean;
 };
 
-export const TodoItem: React.FC<Props> = ({ todo, isEditing, isLoading }) => {
+export const TodoItem: React.FC<Props> = ({
+  todo: { title, completed },
+  isEditing,
+  isLoading,
+}) => {
   return (
-    <div data-cy="Todo" className={`todo ${todo.completed ? 'completed' : ''}`}>
+    <div data-cy="Todo" className={`todo ${completed ? 'completed' : ''}`}>
       <label className="todo__status-label">
         <input
           data-cy="TodoStatus"
           type="checkbox"
           className="todo__status"
-          checked={todo.completed}
+          checked={completed}
         />
       </label>
 
@@ -26,13 +30,13 @@ export const TodoItem: React.FC<Props> = ({ todo, isEditing, isLoading }) => {
             type="text"
             className="todo__title-field"
             placeholder="Empty todo will be deleted"
-            value={todo.title}
+            value={title}
           />
         </form>
       ) : (
         <>
           <span data-cy="TodoTitle" className="todo__title">
-            {todo.title}
+            {title}
           </span>
           <button data-cy="TodoDelete" type="button" className="todo__remove">
             ×
